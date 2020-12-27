@@ -35,9 +35,9 @@ class World():
     box = None
     game_tetrominos = []
 
-    def create_box(self, new_x, new_y, new_width, new_height):
+    def create_box(self, new_x, new_y, new_width, new_height,new_index):
         print(type(game_display))
-        new_tetromino = Tetromino(self, self.game_display, new_x, new_y)
+        new_tetromino = Tetromino(self, self.game_display, new_x, new_y,new_index)
         self.game_tetrominos.append(new_tetromino)
 
     def __init__(self, new_display):

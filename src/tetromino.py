@@ -1,4 +1,5 @@
 import pygame
+import Box2D
 from box import Box
 """
 ------------------------------------------------------------------------
@@ -16,14 +17,13 @@ import pygame
 
 class Tetromino(object):
 
-    game_sprite = pygame.image.load("src/box.png")
-
     body = None
     game_display = None
     boxes = []
     height = 0.0
     width = 0.0
-    shape = [(0, 0), (0, 1), (1, 0), (2, 0)]
+    shape = [ (0, 1), (1, 0), (2, 0)]
+    SEPERATION=1.62
 
     def rot_center(self, image, angle):
         """rotate an image while keeping its center and size"""
@@ -32,11 +32,22 @@ class Tetromino(object):
         rot_sprite.get_rect().center = loc
         return rot_sprite
 
-    def __init__(self, new_world, new_display, new_x, new_y):
-        for cell in self.shape:
-            box = Box(new_world, new_display, new_x +
-                      cell[0], new_y+cell[1], 1.6, 1.6)
-            self.boxes.append(box)
+    def __init__(self, new_world, new_display, new_x, new_y,new_index):
+        box_base = Box(new_world, new_display, new_x, new_y, 1.6, 1.6,new_index)
+        self.boxes.append(box_base)
+
+
+        for pos in self.shape:
+            box_add = Box(new_world, new_display, new_x, new_y, 1.6, 1.6,new_index)
+            rd = Box2D.b2WeldJointDef(
+                bodyA=box_base.body,
+                bodyB=box_add.body,
+                localAnchorA=(pos[0]*self.SEPERATION, pos[1] * self.SEPERATION),  
+            )
+            new_world.b2_game_world.CreateJoint(rd)
+            self.boxes.append(box_add)
+
+
 
     def draw(self):
 

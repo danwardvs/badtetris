@@ -10,11 +10,11 @@ __updated__ = "2018-07-27"
 """
 
 import pygame
-
+import Box2D
 
 class Box(object):
 
-    game_sprite = pygame.image.load("src/box.png")
+    game_sprite = pygame.image.load("box.png")
 
     body = None
     game_display = None
@@ -29,7 +29,7 @@ class Box(object):
         rot_sprite.get_rect().center = loc
         return rot_sprite
 
-    def __init__(self, new_world, new_display, new_x, new_y, new_width, new_height):
+    def __init__(self, new_world, new_display, new_x, new_y, new_width, new_height, new_filter):
         self.game_display = new_display
         self.body = new_world.b2_game_world.CreateDynamicBody(
             position=(new_x, new_y))
@@ -38,8 +38,7 @@ class Box(object):
 
     # And add a box fixture onto it (with a nonzero density, so it will move)
         self.box = self.body.CreatePolygonFixture(
-            box=(new_width/2, new_height/2), density=1, friction=0.3)
-
+            box=(new_width/2, new_height/2), density=1, friction=0.3, groupIndex=new_filter)
     def draw(self):
 
         new_sprite = self.rot_center(
