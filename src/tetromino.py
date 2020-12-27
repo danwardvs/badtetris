@@ -22,8 +22,10 @@ class Tetromino(object):
     boxes = []
     height = 0.0
     width = 0.0
-    shape = [ (0, 1), (1, 0), (2, 0)]
-    SEPERATION=1.62
+    shapes = [[ (0, 1), (1, 0), (2, 0)],[ (1,0 ), (2, 0), (3, 0)],[ (0,-1 ), (0, 1), (1, 0)],[ (1,0 ), (1, 1), (0, 1)]]
+
+
+    SEPERATION=1.63
 
     def rot_center(self, image, angle):
         """rotate an image while keeping its center and size"""
@@ -32,13 +34,13 @@ class Tetromino(object):
         rot_sprite.get_rect().center = loc
         return rot_sprite
 
-    def __init__(self, new_world, new_display, new_x, new_y,new_index):
-        box_base = Box(new_world, new_display, new_x, new_y, 1.6, 1.6,new_index)
+    def __init__(self, new_world, new_display, new_x, new_y,new_index,new_type):
+        box_base = Box(new_world, new_display, new_x, new_y, 1.6, 1.6,new_index,new_type)
         self.boxes.append(box_base)
 
-
-        for pos in self.shape:
-            box_add = Box(new_world, new_display, new_x, new_y, 1.6, 1.6,new_index)
+        shape = self.shapes[new_type]
+        for pos in shape:
+            box_add = Box(new_world, new_display, new_x, new_y, 1.6, 1.6,new_index,new_type)
             rd = Box2D.b2WeldJointDef(
                 bodyA=box_base.body,
                 bodyB=box_add.body,

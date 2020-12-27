@@ -14,7 +14,7 @@ import Box2D
 
 class Box(object):
 
-    game_sprite = pygame.image.load("box.png")
+    game_sprite = None
 
     body = None
     game_display = None
@@ -29,7 +29,8 @@ class Box(object):
         rot_sprite.get_rect().center = loc
         return rot_sprite
 
-    def __init__(self, new_world, new_display, new_x, new_y, new_width, new_height, new_filter):
+    def __init__(self, new_world, new_display, new_x, new_y, new_width, new_height, new_filter,new_type):
+        self.game_sprite = pygame.image.load(str(new_type)+".png")
         self.game_display = new_display
         self.body = new_world.b2_game_world.CreateDynamicBody(
             position=(new_x, new_y))

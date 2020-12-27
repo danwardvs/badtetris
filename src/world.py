@@ -14,6 +14,7 @@ from box import Box
 from tetromino import Tetromino
 from Box2D import (b2PolygonShape, b2World)
 import Box2D
+import random
 
 """
 This is a simple example of building and running a simulation using Box2D. Here
@@ -37,7 +38,7 @@ class World():
 
     def create_box(self, new_x, new_y, new_width, new_height,new_index):
         print(type(game_display))
-        new_tetromino = Tetromino(self, self.game_display, new_x, new_y,new_index)
+        new_tetromino = Tetromino(self, self.game_display, new_x, new_y,new_index,random.randint(0,3))
         self.game_tetrominos.append(new_tetromino)
 
     def __init__(self, new_display):
